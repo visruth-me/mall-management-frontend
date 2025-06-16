@@ -1,1 +1,1 @@
-# mall-management-updated
+# mall-management-frontend
