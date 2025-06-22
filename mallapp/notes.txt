@@ -1,0 +1,44 @@
+Customer view (Unlogined)
+    - Search for mall shops
+    - View of Discounts/Offers
+    - View of events(if any)
+    - File a complaint
+    - Place an inquiry
+    - Rate shops
+
+Customer view (logined)
+    - All of the above
+    - See Payment history
+    - See redeemable points and prizes
+
+Tenant view (logined)
+    - Manage shop inventory
+    - Place requests
+    - Place complaints
+    - Offer approval
+    - View complaints and ratings
+
+Admin view (logined)
+    - Verify and complete requests
+    - View all complaints
+    - Approve offeres
+    - Add new shops
+    - Remove shops
+
+_________________________________________________________
+
+Unlogined Home Page
+    - Sign In 
+    - Events
+    - About us
+    - Discounts
+    - Profile (available only after login)
+    - Services
+    - shops
+    - Contact us (in Footer)
+    - Search
+
+____________________________________________________________________
+Extra: 
+    Customer premium membership management 
+    Mall members only facilities
