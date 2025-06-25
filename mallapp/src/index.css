@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden; /* prevents horizontal scrollbar */
+  overflow-x: hidden; 
 }
 
 .navbar-container {
@@ -34,31 +34,46 @@ body, html {
 }
 
 .dropdown-container{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      flex-wrap: wrap;
-      padding: 1rem;
-      background-color: #f0f0f0;
-      border-bottom: 1px solid #ccc;
+  position: absolute;
+  top: 135px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
   align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
+  width: 100vw;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .dropdown-button{
-      padding: 1rem 1rem;
-      width: 25%;
-      border:1px solid #ccc;
-      border-radius: 5px;
-      background-color: white;
-      cursor: pointer;
+  padding: 1rem 1rem;
+  border:1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: pointer;
+  width: 25%;
 }
 
 .searchbar-container{
-      display: flex;
-      gap: 1rem;
-      background-color: #3d2bff;
-      padding: 1rem;
-      justify-content: flex-end;
+  display: flex;
+  gap: 1rem;
+  background-color: #3d2bff;
+  padding: 1rem;
+  justify-content: flex-end;
 }
 
 .searchbar {
@@ -80,4 +95,32 @@ body, html {
 .searchbar::placeholder {
   color: white;
   font-style: italic;
+}
+
+.heroStyle {
+  height: 100vh;
+  background-color: black;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  position: relative;
+  text-align: center;
+}
+
+.overlayStyle {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.contentStyle {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
 }
