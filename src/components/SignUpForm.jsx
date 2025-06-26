@@ -16,9 +16,9 @@ const SignUpForm = ({ onSignupSuccess }) => {
             console.log("passwords don't match")
         else {
             const userObject = {
+                username: username,
                 name: name,
                 email: email,
-                username: username,
                 password: password,
                 type: accountType
             }
