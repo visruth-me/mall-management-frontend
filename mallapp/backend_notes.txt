@@ -1,0 +1,44 @@
+Users:
+    Name
+    Email
+    PhoneNumber
+    Password
+    Type (Foreign Key to User Type)
+    ID
+
+Dine
+    Name
+    Location
+    Details
+    ShopID
+    List of Items with ItemID
+
+Fashion
+    Name
+    Location
+    Details
+    ShopID
+    List of Items with ItemID
+
+shop
+    Name
+    Location
+    Details
+    ShopID
+    List of Items with ItemID
+
+Incidents
+    Title
+    Reported By
+    Description
+    Status
+
+Feedback
+    Title
+    CustomerID
+    Description
+
+Customer Payments
+    Date
+    Total Spend
+    List of Items and shops
