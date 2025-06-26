@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import loginService from '../services/login'
 
 const LoginForm = ({ onLogin }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [accountType, setAccountType] = useState('')
+
+    const navigate = useNavigate()
 
     const handleLogin = async (event) => {
     event.preventDefault()
@@ -66,8 +69,10 @@ const LoginForm = ({ onLogin }) => {
         </div>
         <button type = "submit">Login</button>
         <div>
-            Already have an account?
-            <button type = "button">Sign Up</button>
+            Don't have an account?
+            <button type = "button" onClick={() => navigate('/signup')}>
+                Sign Up
+            </button>
         </div>
     </form>
     </div>

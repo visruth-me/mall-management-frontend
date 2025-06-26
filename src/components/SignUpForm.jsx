@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import signupService from '../services/signupService'
+import signupService from '../services/signup'
 
-const SignUpForm = () => {
+const SignUpForm = ({ onSignupSuccess }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [contact, setContact] = useState('')
     const [accountType, setAccountType] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -18,15 +17,17 @@ const SignUpForm = () => {
         else {
             const userObject = {
                 name: name,
-                contact: contact,
                 email: email,
                 username: username,
                 password: password,
                 type: accountType
             }
             try {
-                await signupService.create(userObject)
-                console.log('created successfully')
+                const createdUser = await signupService.create(userObject)
+                window.localStorage.setItem(
+                    'loggedNoteappUser', JSON.stringify(createdUser)
+                )
+                onSignupSuccess(createdUser)
             } catch (error) {
                 console.error('Signup Failed', error)
             }
@@ -35,7 +36,7 @@ const SignUpForm = () => {
 
     return (
         <div>
-            <h1>Sign In</h1>
+            <h1>Sign Up</h1>
             <form onSubmit={handleSignUp}>
                 <div>
                     <label>
@@ -50,6 +51,8 @@ const SignUpForm = () => {
                             <option value = "tenant">Tenant</option>
                         </select>
                     </label>
+                </div>
+                <div>
                     <label>
                         Name
                         <input
@@ -59,15 +62,8 @@ const SignUpForm = () => {
                             onChange={({ target }) => setName(target.value)}
                         />
                     </label>
-                    <label>
-                        Contact number
-                        <input
-                            type="number"
-                            value={contact}
-                            name="Contact"
-                            onChange={({ target }) => setContact(target.value)}
-                        />
-                    </label>
+                </div>
+                <div>
                     <label>
                         Email address
                         <input
@@ -77,6 +73,8 @@ const SignUpForm = () => {
                             onChange={({ target }) => setEmail(target.value)}
                         />
                     </label>
+                </div>
+                <div>
                     <label>
                         Username
                         <input 
@@ -86,6 +84,8 @@ const SignUpForm = () => {
                             onChange={({ target }) => setUsername(target.value)}
                         />
                     </label>
+                </div>
+                <div>
                     <label>
                         Password
                         <input 
@@ -95,6 +95,8 @@ const SignUpForm = () => {
                             onChange={({ target }) => setPassword(target.value)}
                         />
                     </label>
+                </div>
+                <div>
                     <label>
                         Re-enter password
                         <input
@@ -104,6 +106,8 @@ const SignUpForm = () => {
                             onChange={({ target }) => setRepassword(target.value)}
                         />
                     </label>
+                </div>
+                <div>
                     <button type="submit">Create Account</button>
                 </div>
             </form>
