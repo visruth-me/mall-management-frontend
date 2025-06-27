@@ -12,6 +12,10 @@ const Dropdown = ({locked,hovered,buttonSets,setHovered}) => {
                 <button
                 key={btnText}
                 className="dropdown-button"
+                onClick = {() => {
+                    const path = btnText === 'Login' ? 'login' : 'signup'
+                    window.location.href = `/${path}`
+                }}
                 >
                 {btnText}
                 </button>
