@@ -63,7 +63,7 @@ const App = () => {
           user ? (
             <Navigate to="/home" replace />
           ) : (
-            <ForgetPasswordForm onReset={setUser} />
+            <ForgetPasswordForm/>
           )
         }
       />

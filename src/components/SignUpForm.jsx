@@ -44,6 +44,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Account Type
                         <select 
+                            required
                             value={accountType}
                             onChange={({ target }) => setAccountType(target.value)}
                         >
@@ -58,6 +59,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Name
                         <input
+                            required
                             type="text"
                             value={name}
                             name="Name"
@@ -69,7 +71,8 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Email address
                         <input
-                            type="text"
+                            required
+                            type="email"
                             value={email}
                             name="Email"
                             onChange={({ target }) => setEmail(target.value)}
@@ -80,6 +83,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Phone Number
                         <input
+                            required
                             type="number"
                             value={phone}
                             name="Phone"
@@ -91,6 +95,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Username
                         <input 
+                            required
                             type="text"
                             value={username}
                             name="Username"
@@ -102,6 +107,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Password
                         <input 
+                            required
                             type="password"
                             value={password}
                             name="Password"
@@ -113,6 +119,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                     <label>
                         Re-enter password
                         <input
+                            required
                             type='password'
                             value={repassword}
                             name="Repassword"
