@@ -6,7 +6,9 @@ import HeroSection from './components/HeroSection';
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import ForgetPasswordForm from './components/ForgetPasswordForm'
+import Customer from './components/Customer'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import Error from './components/Error'
 
 const App = () => {
   const [user, setUser] = useState(null)
@@ -66,13 +68,9 @@ const App = () => {
         }
       />
       <Route
-        path="/profile"
+        path="/customer"
         element={
-          user ? (
-            <h1>Profile Page</h1>
-          ) : (
-            <Navigate to="/login" replace />
-          )
+          <Customer />
         }
       />
       <Route
@@ -87,7 +85,7 @@ const App = () => {
         }
       />
 
-      <Route path="*" element={<Navigate to="/home" replace />} />
+      <Route path="*" element={<Error />} />
     </Routes>
   )
 }
