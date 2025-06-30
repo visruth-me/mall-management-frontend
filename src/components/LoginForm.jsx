@@ -5,7 +5,7 @@ import loginService from '../services/login'
 const LoginForm = ({ onLogin }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [accountType, setAccountType] = useState('')
+    const [type, setType] = useState('')
 
     const navigate = useNavigate()
 
@@ -14,7 +14,7 @@ const LoginForm = ({ onLogin }) => {
 
     // try {
         const user = await loginService.login({
-        username, password,
+        type, username, password
         })
 
         window.localStorage.setItem(
@@ -35,11 +35,12 @@ const LoginForm = ({ onLogin }) => {
         <label>
             Account Type
             <select 
-            value={accountType}
-            onChange={({ target }) => setAccountType(target.value)}  
+            value={type}
+            onChange={({ target }) => setType(target.value)}  
             >
             <option value = "">--Select--</option>
             <option value = "admin">Admin</option>
+            <option value = "customer">Customer</option>
             <option value = "employee">Employee</option>
             <option value = "tenant">Tenant</option>
             </select>
@@ -73,6 +74,9 @@ const LoginForm = ({ onLogin }) => {
             <button type = "button" onClick={() => navigate('/signup')}>
                 Sign Up
             </button>
+            {/* <button type = "button" onClick={() => navigate('/forgotPassword')}>
+                Forgot password
+            </button> */}
         </div>
     </form>
     </div>

@@ -4,6 +4,7 @@ import signupService from '../services/signup'
 const SignUpForm = ({ onSignupSuccess }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [accountType, setAccountType] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -19,6 +20,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                 username: username,
                 name: name,
                 email: email,
+                phone: phone,
                 password: password,
                 type: accountType
             }
@@ -46,7 +48,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
                             onChange={({ target }) => setAccountType(target.value)}
                         >
                             <option value = "">--Select--</option>
-                            <option value = "admin">Admin</option>
+                            <option value = "customer">Customer</option>
                             <option value = "employee">Employee</option>
                             <option value = "tenant">Tenant</option>
                         </select>
@@ -71,6 +73,17 @@ const SignUpForm = ({ onSignupSuccess }) => {
                             value={email}
                             name="Email"
                             onChange={({ target }) => setEmail(target.value)}
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Phone Number
+                        <input
+                            type="number"
+                            value={phone}
+                            name="Phone"
+                            onChange={({ target }) => setPhone(target.value)}
                         />
                     </label>
                 </div>

@@ -5,6 +5,7 @@ import Searchbar from './components/Searchbar';
 import HeroSection from './components/HeroSection';
 import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
+import ForgetPasswordForm from './components/ForgetPasswordForm'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 const App = () => {
@@ -51,6 +52,16 @@ const App = () => {
             <Navigate to="/home" replace />
           ) : (
             <SignUpForm onSignupSuccess={setUser} />
+          )
+        }
+      />
+      <Route
+        path="/forgotPassword"
+        element={
+          user ? (
+            <Navigate to="/home" replace />
+          ) : (
+            <ForgetPasswordForm onReset={setUser} />
           )
         }
       />
