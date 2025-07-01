@@ -1,7 +1,8 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
+import { useMemo } from 'react';
 
-const Dropdown = ({locked,hovered,buttonSets,setHovered, setCategory}) => {
+const Dropdown = ({setLocked, locked,hovered,buttonSets,setHovered, setCategory, setActive}) => {
     const activeKey = locked || hovered;
     if (activeKey && Array.isArray(buttonSets[activeKey]) && buttonSets[activeKey].length > 0){
         return(
@@ -17,6 +18,9 @@ const Dropdown = ({locked,hovered,buttonSets,setHovered, setCategory}) => {
                 className="dropdown-button"
                 onClick = {() => {
                     setCategory(`${btnText}`)
+                    setActive(locked)
+                    setLocked('')
+                    setHovered('')
                 }}
                 >
                 {btnText}
@@ -25,11 +29,10 @@ const Dropdown = ({locked,hovered,buttonSets,setHovered, setCategory}) => {
             </div>
         )
     }
-
     return null;
 }
 
-const Navbar = ({buttonSets, setHovered, locked, setLocked}) => {
+const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCategory}) => {
     return(
         <div className="navbar-container"
         onMouseLeave={() => {
@@ -49,6 +52,10 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked}) => {
               } else {
                 setLocked(key);
                 setHovered(key);
+                if (!Array.isArray(buttonSets[key]) || buttonSets[key].length === 0) {
+                  setActive(key)
+                  setCategory('')
+                }
               }
             }}
             className={`navbar-button ${locked === key ? 'active' : ''}`}
@@ -66,7 +73,7 @@ const HeroSection = () => {
   return (
     <section className='heroStyle'>
       <div className='overlayStyle'></div>
-      <div className='contentStyle'>
+      <div>
         <h1>Explore the Universe</h1>
         <p>Discover shops, services, events, and much more under one roof.</p>
         <button style={{
@@ -100,18 +107,27 @@ const Searchbar = ({search, setSearch}) => {
 }
 
 const Shop = ({category})=>{
-    const [shops, setShops] = useState([])
+    const [shops, setShops] = useState(null)
     useEffect(()=>{
         const fetchShops = async () => {
             try {
                 const response = await axios.get(`/api/shops/names?category=${category}`)
+                console.log('Shops response:', response.data);
                 setShops(response.data)
-            } catch (error) {
+            } catch {
                 alert('Internal server error')
             }
         }
         fetchShops()
     }, [category])
+    if (shops === null) {
+    return (
+        <div>
+          <h2>{category} Shops</h2>
+          <p>Loading shops...</p>
+        </div>
+    );
+  }
     if (shops.length === 0) return <p>No shops found in "{category}"</p>
     return(
         <div>
@@ -129,6 +145,75 @@ const Shop = ({category})=>{
     )
 }
 
+const Discount = ()=>{
+    const [discount, setDiscounts] = useState(null)
+    useEffect(()=>{
+        const fetchDiscounts = async () => {
+            try {
+                const response = await axios.get(`/api/discounts`)
+                console.log('Discounts response:', response.data);
+                setDiscounts(response.data)
+            } catch {
+                alert('Internal server error')
+            }
+        }
+        fetchDiscounts()
+    },[])
+    if (discount === null) {
+    return (
+        <div>
+          <h2>Discounts</h2>
+          <p>Loading discounts...</p>
+        </div>
+    );
+  }
+    if (discount.length === 0) return <p>No Discount Available</p>
+    return(
+        <div>
+        <h2>Discounts</h2>
+        {discount.map((dis, index) => (
+            <div key={index}>
+            <h3>{dis.title}</h3>
+            <p>{dis.description}</p>
+            <p><strong>{dis.percentage}% OFF</strong></p>
+            <p><strong>Valid From: {dis.validFrom}</strong></p>
+            <p><strong>Valid Till: {dis.validTill}</strong></p>
+            </div>
+        ))}
+        </div>
+    )
+}
+
+const Service = ({category})=>{
+    const [services, setServices] = useState(null)
+    useEffect(()=>{
+        const fetchService = async () => {
+            try {
+                const response = await axios.get(`/api/services/one?name=${category}`)
+                console.log('Service response:', response.data);
+                setServices(response.data)
+            } catch {
+                alert('Internal server error')
+            }
+        }
+        fetchService()
+    }, [category])
+    if (services === null) {
+    return (
+        <div>
+          <h2>{category}</h2>
+          <p>Loading service...</p>
+        </div>
+    );
+  }
+    return(
+        <div>
+        <h2>{category}</h2>
+          <p>{services.description}</p>
+        </div>
+    )
+}
+
 const Home = ()=>{
     const [hovered, setHovered] = useState('');
     const [locked, setLocked] = useState('');
@@ -136,6 +221,15 @@ const Home = ()=>{
     const [shopCategories, setShopCategories] = useState([])
     const [serviceNames, setServiceNames] = useState([])
     const [category,setCategory] = useState('')
+    const [active,setActive] = useState('')
+
+    const buttonSets = useMemo(() => ({
+      home: '',
+      shops: shopCategories,
+      services: serviceNames,
+      discounts: '',
+      signin: ['Login', 'Sign Up'],
+    }),[shopCategories, serviceNames])
 
     useEffect(()=>{
         const fetchValues = async() => {
@@ -144,29 +238,26 @@ const Home = ()=>{
                 const service = await axios.get('/api/services')
                 setShopCategories(shop.data)
                 setServiceNames(service.data.map(s => s.name))
-            } catch (error) {
+            } catch {
                 alert('Internal Server Error')
             }
         }
         fetchValues()
     },[])
-    const buttonSets = {
-      shops: shopCategories,
-      services: serviceNames,
-      discounts: '',
-      signin: ['Login', 'Sign Up'],
-    };
 
     return(
         <div style={{ fontFamily: 'sans-serif', position: 'relative' }}>
         <Searchbar search={search} setSearch={setSearch} />
-        <Navbar buttonSets={buttonSets} setHovered={setHovered} locked={locked} setLocked={setLocked}/>
-        <Dropdown locked={locked} hovered={hovered} buttonSets={buttonSets} setHovered={setHovered} setCategory={setCategory} />
-        {category ? (
-            <Shop category={category} />
-        ) : (
-            <HeroSection />
-        )}
+        <Navbar buttonSets={buttonSets} setHovered={setHovered} locked={locked} setLocked={setLocked} setActive={setActive} setCategory={setCategory}/>
+        <Dropdown setLocked={setLocked} locked={locked} hovered={hovered} buttonSets={buttonSets} setHovered={setHovered} setCategory={setCategory} setActive={setActive}/>
+        <div className="main-content">
+          {category ? 
+          (active ==='shops'? <Shop category={category} /> :
+            (active === 'services' ? <Service category={category} /> : null)) :
+              (active === 'discounts' ? <Discount /> :
+                <HeroSection />)
+          }
+        </div>
         </div>
     )
 }
