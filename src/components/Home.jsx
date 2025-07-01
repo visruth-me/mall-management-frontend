@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom'
 
 const Dropdown = ({setLocked, locked,hovered,buttonSets,setHovered, setCategory, setActive}) => {
     const activeKey = locked || hovered;
@@ -32,7 +33,18 @@ const Dropdown = ({setLocked, locked,hovered,buttonSets,setHovered, setCategory,
     return null;
 }
 
-const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCategory}) => {
+const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCategory, auth, handleLogout}) => {
+    const navigate = useNavigate();
+
+    const handleAuthClick = () => {
+      if (auth === 'Login') {
+        navigate('/login');
+      } else if (auth === 'Profile') {
+        navigate('/customer');
+      } {/*else if (auth === 'Dashboard') {
+        navigate('/dashboard'); // optional if needed
+      }*/}
+    };
     return(
         <div className="navbar-container"
         onMouseLeave={() => {
@@ -46,6 +58,10 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCatego
               if (!locked) setHovered(key);
             }}
             onClick={() => {
+              if (key === auth) {
+                handleAuthClick();
+                return;
+              }
               if (locked === key) {
                 setLocked('');
                 setHovered('');
@@ -63,6 +79,14 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCatego
             {key.charAt(0).toUpperCase() + key.slice(1)}
           </button>
         ))}
+        {auth!=='Login' && (
+          <button
+            onClick={handleLogout}
+            className="navbar-button"
+          >
+            Logout
+          </button>
+        )}
       </div>
     )
 }
@@ -222,14 +246,31 @@ const Home = ()=>{
     const [serviceNames, setServiceNames] = useState([])
     const [category,setCategory] = useState('')
     const [active,setActive] = useState('')
+    const [auth,setAuth] = useState('Login')
+
+    useEffect(() => {
+      const saved = JSON.parse(localStorage.getItem('loggedUser'));
+      if (saved?.token) {
+        try {
+          const decoded = JSON.parse(atob(saved.token.split('.')[1])); // OR use jwtDecode(saved.token)
+          if (decoded.type === 'customer') {
+            setAuth('Profile');
+          } else {
+            setAuth('Dashboard');
+          }
+        } catch {
+          console.warn("Invalid token");
+        }
+      }
+    }, []);
 
     const buttonSets = useMemo(() => ({
       home: '',
       shops: shopCategories,
       services: serviceNames,
       discounts: '',
-      signin: ['Login', 'Sign Up'],
-    }),[shopCategories, serviceNames])
+      [auth]: '',
+    }),[shopCategories, serviceNames, auth])
 
     useEffect(()=>{
         const fetchValues = async() => {
@@ -245,10 +286,19 @@ const Home = ()=>{
         fetchValues()
     },[])
 
+    const handleLogout = () => {
+      localStorage.removeItem('loggedUser');
+      setAuth('Login');
+      setCategory('');
+      setActive('');
+      setLocked('');
+      setHovered('');
+      window.location.reload();
+    };
     return(
         <div style={{ fontFamily: 'sans-serif', position: 'relative' }}>
         <Searchbar search={search} setSearch={setSearch} />
-        <Navbar buttonSets={buttonSets} setHovered={setHovered} locked={locked} setLocked={setLocked} setActive={setActive} setCategory={setCategory}/>
+        <Navbar buttonSets={buttonSets} setHovered={setHovered} locked={locked} setLocked={setLocked} setActive={setActive} setCategory={setCategory} auth={auth} handleLogout={handleLogout}/>
         <Dropdown setLocked={setLocked} locked={locked} hovered={hovered} buttonSets={buttonSets} setHovered={setHovered} setCategory={setCategory} setActive={setActive}/>
         <div className="main-content">
           {category ? 

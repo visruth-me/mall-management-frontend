@@ -39,6 +39,7 @@ const LoginForm = ({ onLogin }) => {
             <select 
             value={type}
             onChange={({ target }) => setType(target.value)}  
+            required
             >
             <option value = "">--Select--</option>
             <option value = "admin">Admin</option>
