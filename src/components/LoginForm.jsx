@@ -10,21 +10,23 @@ const LoginForm = ({ onLogin }) => {
     const navigate = useNavigate()
 
     const handleLogin = async (event) => {
-    event.preventDefault()
+        event.preventDefault()
 
-    // try {
-        const user = await loginService.login({
-        type, username, password
-        })
+        try {
+            const user = await loginService.login({
+            type, username, password
+            })
 
-        window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
-        )
-        // noteService.setToken(user.token)
-        onLogin(user)
-        setPassword('')
-        setUsername('')
-    // } 
+            window.localStorage.setItem(
+            'loggedUser', JSON.stringify(user)
+            )
+            loginService.setToken(user.token)
+            onLogin(user)
+            setPassword('')
+            setUsername('')
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -74,9 +76,9 @@ const LoginForm = ({ onLogin }) => {
             <button type = "button" onClick={() => navigate('/signup')}>
                 Sign Up
             </button>
-            {/* <button type = "button" onClick={() => navigate('/forgotPassword')}>
+            <button type = "button" onClick={() => navigate('/forgotPassword')}>
                 Forgot password
-            </button> */}
+            </button>
         </div>
     </form>
     </div>

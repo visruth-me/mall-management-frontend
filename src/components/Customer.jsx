@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import customerService from '../services/customer'
+import loginService from '../services/login'
 import { jwtDecode } from 'jwt-decode'
 
 const FeedbackForm = () => {
@@ -17,6 +18,7 @@ const FeedbackForm = () => {
                 setShopOptions(response.data)
             } catch (error) {
                 alert('Internal Server Error')
+                console.error(error)
             }
         }
         fetchShops()
@@ -76,24 +78,30 @@ const FeedbackForm = () => {
 }
 
 const Profile = () => {
-    const [user, setUser] = useState('')
+    const [user, setUser] = useState(null)
     const [username, setUsername] = useState('')
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if(token) {
-            try {
-                const decoded = jwtDecode(token)
-                setUser(decoded.id)
-            } catch{
-                alert('Not logged in')
-            }
+        const saved = JSON.parse(localStorage.getItem('loggedNoteappUser'));
+        if (!saved?.token) return alert('Not logged in');
+
+        loginService.setToken(saved.token);
+
+        try {
+            const decoded = jwtDecode(saved.token);
+            setUser(decoded.id);
+        } catch {
+            alert('Invalid token');  
         }
-    },[])
+    }, []);
 
     useEffect(()=> {
+        if(!user)
+            return
+
         const fetchUser = async() => {
             try{
                 const response = await axios.get(`api/customers/${user}`)
@@ -103,10 +111,11 @@ const Profile = () => {
                 setPhone(response.data.phone)
             } catch {
                 alert('Failed to fetch user details')
-            }
+            }   
         }
         fetchUser()
-    })
+    }, [user])
+    
     if(!user) {
         return <p>No user info available</p>
     }
