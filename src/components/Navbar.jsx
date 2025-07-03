@@ -1,10 +1,6 @@
-const Navbar = ({buttonSets, setHovered, locked, setLocked}) => {
+const AdminDashboard = ({buttonSets, setHovered, locked, setLocked}) => {
     return(
-        <div className="navbar-container"
-        onMouseLeave={() => {
-          if (!locked) setHovered('');
-        }}
-      >
+        <div className="admin-dashboard">
         {Object.keys(buttonSets).map((key) => (
           <button
             key={key}
@@ -20,7 +16,7 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked}) => {
                 setHovered(key);
               }
             }}
-            className={`navbar-button ${locked === key ? 'active' : ''}`}
+            className={` ${locked === key ? 'active' : ''}`}
           >
             {key.charAt(0).toUpperCase() + key.slice(1)}
           </button>
@@ -29,4 +25,4 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked}) => {
     )
 }
 
-export default Navbar
+export default AdminDashboard

@@ -5,9 +5,9 @@ import axios from 'axios'
 //   return data;
 // };
 
-const create = async ({ email, password, type }) => {
+const reset = async ({ email, password, type }) => {
     const response = await axios.put('/api/forget', { email, password, type })
     return response.data
 }
 
-export default { create }
+export default { reset }

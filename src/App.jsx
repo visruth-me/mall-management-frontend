@@ -7,6 +7,14 @@ import LoginForm from './components/LoginForm'
 import SignUpForm from './components/SignUpForm'
 import ForgetPasswordForm from './components/ForgetPasswordForm'
 import Customer from './components/Customer'
+
+import AdminDashboard from './components/AdminDashboard'
+import ReviewInquiries from './components/admin/ReviewInquiries'
+import ViewFeedback from './components/admin/ViewFeedback'
+import ViewShops from './components/admin/ViewShops'
+import ApproveDiscount from './components/admin/ApproveDiscount'
+import ServiceStatus from './components/admin/ServiceStatus'
+
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Error from './components/Error'
 
@@ -71,6 +79,42 @@ const App = () => {
         path="/customer"
         element={
           <Customer />
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <AdminDashboard />
+        }
+      />
+      <Route
+        path="/ReviewInquiries"
+        element={
+          <ReviewInquiries />
+        }
+      />
+      <Route
+        path="/ViewFeedback"
+        element={
+          <ViewFeedback />
+        }
+      />
+      <Route
+        path="/ViewShops"
+        element={
+          <ViewShops />
+        }
+      />
+      <Route
+        path="/ApproveDiscount"
+        element={
+          <ApproveDiscount />
+        }
+      />
+      <Route
+        path="/ServiceStatus"
+        element={
+          <ServiceStatus />
         }
       />
       <Route

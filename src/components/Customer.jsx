@@ -11,7 +11,7 @@ const FeedbackForm = () => {
     const [shopOptions, setShopOptions] = useState([])
     const [message, setMessage] = useState('')
 
-    useEffect(()=> {
+    useEffect(() => {
         const fetchShops = async() => {
             try{
                 const response = await axios.get('/api/shops/names?category=All')
@@ -34,7 +34,7 @@ const FeedbackForm = () => {
             setRating('')
             setDescription('')
         } catch(error) {
-            console.error('Submmit failed:',error)
+            console.error('Submit failed:',error)
             setMessage('Failed to submit feedback')
         }
     }

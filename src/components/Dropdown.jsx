@@ -1,4 +1,4 @@
-const Dropdown = ({locked,hovered,buttonSets,setHovered}) => {
+const Dropdown = ({locked, hovered, buttonSets, setHovered}) => {
     const activeKey = locked || hovered;
     if (activeKey){
         return(
