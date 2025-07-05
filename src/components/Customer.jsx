@@ -51,8 +51,8 @@ const FeedbackForm = () => {
                     required
                 >
                     <option value="">Select Shop</option>
-                    {shopOptions.map((shop,idx)=>(
-                        <option key={idx} value={shop}>{shop}</option>
+                    {shopOptions.map((shop)=>(
+                        <option key={shop.id} value={shop.name}>{shop.name}</option>
                     ))}
                 </select>
                 <p>Rating</p>
@@ -85,7 +85,7 @@ const Profile = () => {
     const [phone, setPhone] = useState('')
 
     useEffect(() => {
-        const saved = JSON.parse(localStorage.getItem('loggedNoteappUser'));
+        const saved = JSON.parse(localStorage.getItem('loggedUser'));
         if (!saved?.token) return alert('Not logged in');
 
         loginService.setToken(saved.token);
