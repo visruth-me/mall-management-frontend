@@ -11,6 +11,11 @@ import ViewShops from './components/admin/ViewShops'
 import ApproveDiscount from './components/admin/ApproveDiscount'
 import ServiceStatus from './components/admin/ServiceStatus'
 
+import TenantDashboard from './components/TenantDashboard'
+import PlaceDiscountRequest from './components/tenants/PlaceDiscountRequest'
+import PlaceInquiry from './components/tenants/PlaceInquiry'
+import ViewShopFeedback from './components/tenants/ViewShopFeedback'
+
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Error from './components/Error'
 import Home from './components/Home'
@@ -73,6 +78,12 @@ const App = () => {
         }
       />
       <Route
+        path="/tenant"
+        element={
+          <TenantDashboard />
+        }
+      />
+      <Route
         path="/ReviewInquiries"
         element={
           <ReviewInquiries />
@@ -100,6 +111,24 @@ const App = () => {
         path="/ServiceStatus"
         element={
           <ServiceStatus />
+        }
+      />
+      <Route
+        path="/PlaceDiscountRequest"
+        element={
+          <PlaceDiscountRequest />
+        }
+      />
+      <Route
+        path="/PlaceInquiry"
+        element={
+          <PlaceInquiry />
+        }
+      />
+      <Route
+        path="/ViewShopFeedback"
+        element={
+          <ViewShopFeedback />
         }
       />
       <Route
