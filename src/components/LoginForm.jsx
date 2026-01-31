@@ -24,13 +24,14 @@ const LoginForm = ({ onLogin }) => {
             onLogin(user)
             setPassword('')
             setUsername('')
+            navigate('/')
         } catch (error) {
             console.error(error)
         }
     }
 
     return (
-    <div>
+    <div className='login-container'>
     <h1>LOGIN</h1>
     <form onSubmit={handleLogin}>
         <div>
@@ -72,8 +73,8 @@ const LoginForm = ({ onLogin }) => {
         </label>
         </div>
         <button type = "submit">Login</button>
-        <div>
-            Don't have an account?
+        <div className='secondary-buttons'>
+            
             <button type = "button" onClick={() => navigate('/signup')}>
                 Sign Up
             </button>

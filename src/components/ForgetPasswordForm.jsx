@@ -32,7 +32,7 @@ const ForgetPasswordForm = () => {
     }
 
     return (
-        <div>
+        <div className='login-container'>
             <h1>Reset Your Password</h1>
             <form onSubmit={handleReset}>
                 <div>

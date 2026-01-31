@@ -12,6 +12,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
 
     const handleSignUp = async (event) => {
         event.preventDefault()
+        //console.log("Form")
 
         if(password !== repassword)
             console.log("passwords don't match")
@@ -37,7 +38,7 @@ const SignUpForm = ({ onSignupSuccess }) => {
     }
 
     return (
-        <div>
+        <div className="login-container">
             <h1>Sign Up</h1>
             <form onSubmit={handleSignUp}>
                 <div>
@@ -49,9 +50,9 @@ const SignUpForm = ({ onSignupSuccess }) => {
                             onChange={({ target }) => setAccountType(target.value)}
                         >
                             <option value = "">--Select--</option>
-                            <option value = "customer">Customer</option>
-                            <option value = "employee">Employee</option>
-                            <option value = "tenant">Tenant</option>
+                            <option value = "customers">Customer</option>
+                            <option value = "employees">Employee</option>
+                            <option value = "tenants">Tenant</option>
                         </select>
                     </label>
                 </div>

@@ -3,14 +3,16 @@ body, html {
   padding: 0;
   width: 100%;
   overflow-x: hidden; 
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .navbar-container {
   display: flex;
   gap: 1rem;
-  background-color: #333;
+  background-color: #0c529d;
   padding: 1rem;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(12, 82, 157, 0.3);
 }
 
 .navbar-button {
@@ -20,18 +22,21 @@ body, html {
   cursor: pointer;
   font-size: 1rem;
   background-color: transparent;
-  transition: background-color 0.2s;
+  border-radius: 6px;
+  transition: background-color 0.2s, transform 0.15s;
 }
 
 
 .navbar-button.active {
-  background-color: #555;
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 
 .navbar-button:hover {
-  background-color: #444;
+  background-color: #ef8336;
+  transform: translateY(-1px);
 }
+
 
 .dropdown-container{
   position: absolute;
@@ -39,18 +44,18 @@ body, html {
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   gap: 1rem;
   flex-wrap: wrap;
-  padding: 1rem;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-bottom: 3px solid #ef8336;
   align-items: center;
+  width: 100vw;
   opacity: 0;
   animation: fadeIn 0.3s ease-in-out forwards;
-  width: 100vw;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
 @keyframes fadeIn {
@@ -60,18 +65,27 @@ body, html {
 }
 
 .dropdown-button{
-  padding: 1rem 1rem;
-  border:1px solid #ccc;
-  border-radius: 5px;
-  background-color: white;
+  padding: 1rem;
+  border: 2px solid #0c529d;
+  border-radius: 8px;
+  background-color: #ffffff;
   cursor: pointer;
   width: 25%;
+  font-weight: 600;
+  color: #0c529d;
+  transition: background-color 0.2s, color 0.2s, transform 0.15s;
+}
+
+.dropdown-button:hover {
+  background-color: #ef8336;
+  color: white;
+  transform: translateY(-2px);
 }
 
 .searchbar-container{
   display: flex;
   gap: 1rem;
-  background-color: #3d2bff;
+  background-color: #0c529d;
   padding: 1rem;
   justify-content: flex-end;
 }
@@ -89,17 +103,21 @@ body, html {
 }
 
 .searchbar:focus {
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid #ef8336;
 }
 
 .searchbar::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.85);
   font-style: italic;
 }
 
 .heroStyle {
   height: 100vh;
-  background-color: black;
+  background: linear-gradient(
+    180deg,
+    #072f5f 0%,
+    #041f3d 100%
+  );
   background-size: cover;
   background-position: center;
   display: flex;
@@ -112,11 +130,19 @@ body, html {
 
 .overlayStyle {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.35);
   z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;  
+  max-width: 700px;
+  padding: 1rem;
 }
 
 .main-content {
@@ -128,4 +154,287 @@ body, html {
   position: relative;
   z-index: 2;
   margin: 0 auto;          
+}
+
+.Info{
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem 1.5rem;
+  background-color: #ffffff; 
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); 
+  color: #041f3d; 
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.Info h2 {
+  font-size: 2rem;
+  color: #0c529d; 
+  margin-bottom: 0.5rem;
+}
+
+.list {
+  background-color: #ffffff;
+  padding: 1rem 1.5rem;
+    border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: left; 
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.list h3 {
+  font-size: 1.5rem;
+  color: #041f3d;
+  margin-bottom: 0.3rem;
+}
+
+.list p {
+  font-size: 1rem;
+  color: #041f3d;
+  margin: 0.1rem 0;
+}
+
+.list p strong {
+  color: #0c529d; 
+}
+.list:hover {
+  background-color: #f9eee6;
+  color: white; 
+}
+
+/*--------------------------------------*/
+/* Container for the login form */
+.login-container {
+  max-width: 400px;
+  margin: 4rem auto;
+  padding: 2rem 2rem;
+  background-color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+  transition: box-shadow 0.2s ease;
+}
+
+.login-container:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Heading */
+.login-container h1 {
+  color: #0c529d;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Labels */
+.login-container label {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  font-size: 1rem;
+  color: #041f3d;
+  margin-bottom: 0.5rem;
+}
+
+/* Input fields */
+.login-container input,
+.login-container select {
+  padding: 0.6rem 1rem;
+  margin-top: 0.3rem;
+  border: 2px solid #0c529d;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+
+.login-container input:focus,
+.login-container select:focus {
+  border-color: #ef8336; /* orange accent on focus */
+  background-color: rgba(239, 131, 54, 0.05);
+}
+
+/* Submit button */
+.login-container button[type="submit"] {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background-color: #0c529d;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.15s;
+  margin-top: 1rem;
+}
+
+.login-container button[type="submit"]:hover {
+  background-color: #ef8336; /* accent orange */
+}
+
+/* Secondary buttons (Sign Up / Forgot password) */
+.login-container .secondary-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.login-container .secondary-buttons button {
+  flex: 1;
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  background-color: transparent;
+  color: #0c529d;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.login-container .secondary-buttons button:hover {
+  color: #ef8336;
+}
+
+
+/* ---------------- PROFILE PAGE ---------------- */
+
+.profile-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2.5rem 2rem;
+    background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fff4ec 100%
+  );
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  color: #041f3d;
+}
+
+.profile-container h2 {
+  text-align: center;
+  color: #0c529d;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.profile-details p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.profile-details strong {
+  color: #0c529d;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .profile-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------- FEEDBACK FORM ---------------- */
+.feedback-container {
+  background-color: rgba(239, 131, 54, 0.05);
+  padding: 2rem;
+  border-radius: 14px;
+}
+
+/* Form spacing */
+.feedback-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Labels / titles */
+.feedback-container p {
+  margin: 0.2rem 0;
+  font-weight: 600;
+  color: #0c529d;
+}
+
+/* INPUT WRAPPER FIX (prevents edge-to-edge) */
+.feedback-container select,
+.feedback-container input,
+.feedback-container textarea {
+  width: 90%;                 /* ❗ no full width */
+  align-self: center;         /* center inside form */
+  padding: 0.75rem 1rem;      /* ✅ internal padding */
+  border-radius: 12px;
+  border: 2px solid #ef8336;
+  font-size: 1rem;
+  background-color: #fff1e6;  /* 🟠 orange inside */
+  color: #041f3d;
+  box-shadow: inset 0 2px 6px rgba(239, 131, 54, 0.15);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+/* Focus */
+.feedback-container select:focus,
+.feedback-container input:focus,
+.feedback-container textarea:focus {
+  border-color: #0c529d;
+  box-shadow: 0 0 0 3px rgba(12, 82, 157, 0.2);
+  background-color: #fff7f2;
+}
+
+/* Textarea sizing */
+.feedback-container textarea {
+  min-height: 120px;
+}
+
+/* Submit button */
+.feedback-container button {
+  padding: 0.6rem 1.2rem;
+  width: auto;            /* make button shrink to content */
+  border: none;
+  align-self: center;
+  border-radius: 12px;
+  background-color: #0c529d;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.15s;
+  margin-top: 1rem;
+}
+.feedback-container h1,
+.feedback-container h2 {
+  color: #0c529d;               /* navbar blue */
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.feedback-container button:hover {
+  background-color: #ef8336; 
+}
+
+/* Message */
+.feedback-message {
+  background-color: #fff1e6;
+  border-left: 4px solid #ef8336;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  color: #0c529d;
 }

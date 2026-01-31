@@ -14,7 +14,7 @@ import ServiceStatus from './components/admin/ServiceStatus'
 import TenantDashboard from './components/TenantDashboard'
 import PlaceDiscountRequest from './components/tenants/PlaceDiscountRequest'
 import PlaceInquiry from './components/tenants/PlaceInquiry'
-import ViewShopFeedback from './components/tenants/ViewShopFeedback'
+import ViewShopFeedback from './components/tenants/ViewShopFeedbacks'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
 import Error from './components/Error'
@@ -24,14 +24,18 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   // const activeKey = locked || hovered;
-
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
-    if(loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+    const saved = localStorage.getItem('loggedUser')
+    if (saved) {
+      setUser(JSON.parse(saved))
     }
   }, [])
+
+  const RequireAuth = ({ children }) =>
+    user ? children : <Navigate to="/login" replace />
+
+  const RequireRole = (role, children) =>
+    user?.type === role ? children : <Navigate to="/" replace />
 
   return (
     <Routes>
@@ -39,7 +43,7 @@ const App = () => {
         path="/login"
         element={
           user ? (
-            <Navigate to="/home" replace />
+            <Navigate to="/" replace />
           ) : (
             <LoginForm onLogin={setUser} />
           )
@@ -68,19 +72,25 @@ const App = () => {
       <Route
         path="/customer"
         element={
-          <Customer />
+          <RequireAuth>
+            {RequireRole('customer', <Customer />)}
+          </RequireAuth>
         }
       />
       <Route
         path="/admin"
         element={
-          <AdminDashboard />
+          <RequireAuth>
+            {RequireRole('admin', <AdminDashboard />)}
+          </RequireAuth>
         }
       />
       <Route
         path="/tenant"
         element={
-          <TenantDashboard />
+          <RequireAuth>
+            {RequireRole('tenant', <TenantDashboard />)}
+          </RequireAuth>
         }
       />
       <Route
@@ -132,8 +142,8 @@ const App = () => {
         }
       />
       <Route
-        path="/home"
-        element={<Home />}
+        path="/"
+        element={<Home user={user} setUser={setUser}/>}
       />
 
       <Route path="*" element={<Error />} />

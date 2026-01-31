@@ -40,9 +40,9 @@ const FeedbackForm = () => {
     }
 
     return(
-        <div>
+        <div className='feedback-container'>
             <h1>Feedback Form</h1>
-            {message && <p>{message}</p>}
+            {message && <p className="feedback-message">{message}</p>}
             <form onSubmit={handleSubmit}>
                 <p>Shop Name</p>
                 <select 
@@ -120,12 +120,13 @@ const Profile = () => {
         return <p>No user info available</p>
     }
     return(
-        <div>
+        <div className="profile-container">
             <h2>User Info</h2>
+            <div className='profile-details'>
             <p><strong>Username: </strong>{username}</p>
             <p><strong>Name: </strong>{name}</p>
             <p><strong>Email: </strong>{email}</p>
-            <p><strong>Phone: </strong>{phone}</p>
+            <p><strong>Phone: </strong>{phone}</p></div>
             <br /><br />
             <FeedbackForm />
         </div>

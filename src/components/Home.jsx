@@ -41,9 +41,9 @@ const Navbar = ({buttonSets, setHovered, locked, setLocked, setActive, setCatego
         navigate('/login');
       } else if (auth === 'Profile') {
         navigate('/customer');
-      } {/*else if (auth === 'Dashboard') {
-        navigate('/dashboard'); // optional if needed
-      }*/}
+      }else if (auth === 'Dashboard') {
+        navigate('/dashboard'); 
+      }
     };
     return(
         <div className="navbar-container"
@@ -97,7 +97,7 @@ const HeroSection = () => {
   return (
     <section className='heroStyle'>
       <div className='overlayStyle'></div>
-      <div>
+      <div className="heroContent">
         <h1>Explore the Universe</h1>
         <p>Discover shops, services, events, and much more under one roof.</p>
         <button style={{
@@ -154,10 +154,10 @@ const Shop = ({category})=>{
   }
     if (shops.length === 0) return <p>No shops found in "{category}"</p>
     return(
-        <div>
+        <div className="Info">
         <h2>{category} Shops</h2>
         {shops.map((shop, index) => (
-            <div key={index}>
+            <div className="list" key={index}>
             <h3>{shop.name}</h3>
             <p>{shop.description}</p>
             <p><strong>{shop.location}</strong></p>
@@ -231,7 +231,7 @@ const Service = ({category})=>{
     );
   }
     return(
-        <div>
+        <div className='Info'>
         <h2>{category}</h2>
           <p>{services.description}</p>
         </div>
@@ -255,11 +255,12 @@ const Home = ()=>{
           const decoded = JSON.parse(atob(saved.token.split('.')[1])); // OR use jwtDecode(saved.token)
           if (decoded.type === 'customer') {
             setAuth('Profile');
-          } else {
+          } else if (decoded.type === 'admin' || decoded.type === 'tenant' || decoded.type === 'employee'){
             setAuth('Dashboard');
           }
         } catch {
           console.warn("Invalid token");
+          setAuth('Login');
         }
       }
     }, []);
